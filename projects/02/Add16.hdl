@@ -14,7 +14,7 @@ CHIP Add16 {
 
     PARTS:
     HalfAdder(a=a[0], b=b[0], sum=out[0], carry=carry);
-    loop1: for index in 1 to 15 loop
+    for index=1:15
       FullAdder(a=a[index],b=b[index],c=carry, sum=out[index], carry=carry);
-    end loop loop1;
+    end;
 }
