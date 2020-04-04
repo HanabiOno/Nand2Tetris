@@ -42,17 +42,22 @@ CHIP ALU {
         ng; // 1 if (out < 0),  0 otherwise
 
     PARTS:
+    // if (zx == 1) set x = 0, if (zy == 1) set y = 0
     Mux16(a=x,b=false,sel=zx,out=x1);
     Mux16(a=y,b=false,sel=zy,out=y1);
     Not16(in=x1,out=notx);
     Not16(in=y1,out=noty);
+
+    // if (nx == 1) set x = !x, if (ny == 1) set y = !y 
     Mux16(a=x1,b=notx,sel=nx,out=x2);
     Mux16(a=y1,b=noty,sel=ny,out=y2);
 
+    // if (f == 1) set out = x + y, if (f == 0)  set out = x & y 
     Add16(a=x2,b=y2,out=sum);
     And16(a=x2,b=y2,out=both);
     Mux16(a=both,b=sum,sel=f,out=oper);
 
+    // if (no == 1) set out = !out
     Not16(in=oper,out=noper);
     Mux16(a=oper,b=noper,sel=no,out=out);   
 }
