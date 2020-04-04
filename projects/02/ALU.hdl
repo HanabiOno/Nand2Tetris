@@ -59,5 +59,14 @@ CHIP ALU {
 
     // if (no == 1) set out = !out
     Not16(in=oper,out=noper);
-    Mux16(a=oper,b=noper,sel=no,out=out);   
+    Mux16(a=oper,b=noper,sel=no,out[0..7]=out1,out[8..15]=out2,out=out,out=inng);
+
+    // zr; 1 if (out == 0), 0 otherwise
+    Or8Way(in=out1,out=part1);
+    Or8Way(in=out2,out=part2);
+    Or(a=part1,b=part2,out=notzr);
+    Not(in=notzr,out=zr);
+
+    // ng; 1 if (out < 0),  0 otherwise
+    And16(a=inng,b=true,out[15]=ng);   
 }
