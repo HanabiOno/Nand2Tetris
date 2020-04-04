@@ -15,3 +15,5 @@ It should read the .asm file, translate it into correct Hack binary code and wri
 The assembler will be built in two stages:
 1. write a basic assembler designed to translate assembly programs that contain no symbols
 1. extend your basic assembler with symbol handling capabilities, yielding the final assembler
+
+> Similarly to project 2, in order to make sure the assembler is working correctly, it will be tested. Most 3 out of 4 .asm files have an *L.asm file which is without symbols to check wether the first step is working correctly.
