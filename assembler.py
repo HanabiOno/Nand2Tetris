@@ -2,8 +2,13 @@
 
 # "//", white spaced and lines should be ignored
 def cleaner(code):
-    """All comments, "//", white spaces and white lined will be removed to clean up the code"""
-    return clean_code
+    """All comments, "//", white spaces and white lined will be removed to clean up the code.
+Also, every line of code will be out in a list."""
+    clean_code = []
+    for line in code:
+        print(line)
+    #return clean_code
+
 
 #Symbols: variables and labels
 def symbol_table(clean_code):
@@ -32,7 +37,8 @@ def commandType(line):
     else:
         return "C"
 
-def parser(parse_code)->:
+
+def parser(parse_code):
     """The final parser that turns the assembly into binary code"""
     binlist = []
     for line in parse_code:
@@ -43,9 +49,9 @@ def parser(parse_code)->:
         for line in binlist:
             f.write("%s\n" % line)
 
-def Acommand(Acommand) -> str:
+def Acommand(Acommand):
     """A-command converted to binary code. A-command consists out of 0[ValueInBinary]."""
-    bin_value = '{0:08b}'.format(Acommand[1:])
+    bin_value = '{0:08b}'.format(int(Acommand[1:]))
     bin_Acommand = '0' + bin_value
     return bin_Acommand
 
@@ -55,66 +61,78 @@ def Acommand(Acommand) -> str:
 # if dest empt, "=" omitted
 # if jump empty, ";" omitted
 
-def Ccommand(Ccommand) -> str:
+def Ccommand(Ccommand):
     """This function uses dest, comp, jump to turn the C-command into binary code.
     C-command consists out of 111[dest][comp][jump]"""
 
     if "=" in Ccommand:
         splitted_C = Ccommand.split("=")
         ass_dest = splitted_C[0]
-    "If there is not a '=', dest is null"    
+        ass_comp_jump = splitted_C[1]
+    #If there is not a '=', dest is null    
     else:
         ass_dest = "null"
-        splitted_C = Ccommand.split()
+        ass_comp_jump = Ccommand
         
+    if ";" in ass_comp_jump:
+        splitted_C2 = Ccommand.split(";")
+        ass_comp = splitted_C2[0]
+        ass_jump = splitted_C2[1]
+    else:
+        ass_comp = ass_comp_jump
+        ass_jump = "null"
+   
     bin_Ccommand = "111" + dest[ass_dest] + comp[ass_comp] + jump[ass_jump] 
     return bin_Ccommand
 
 # For eacht part of the C-command we use a dictionary to translate that part quickly.
 dest = {}
-dest['M'] = '001'
-dest['D'] = '010'
-dest['MD'] = '011'
-dest['A'] = '100'
-dest['AM'] = '101'
-dest['AD'] = '110'
-dest['AMD'] = '111'
+dest['null']='000'
+dest['M']='001'
+dest['D']='010'
+dest['MD']='011'
+dest['A']='100'
+dest['AM']='101'
+dest['AD']='110'
+dest['AMD']='111'
 
 comp = {}
-comp['0'] = '0101010'
-comp['1'] = '0111111'
-comp['-1'] = '0111010'
-comp['D'] = '0001100'
-comp['A'] = '0110000'
-comp['!D'] = '0001101'
-comp['!A'] = '0110001'
-comp['-D'] = '0001111'
-comp['-A'] = '0110011'
-comp['D+1'] = '0011111'
-comp['A+1'] = '0110111'
-comp['D-1'] = '0001110'
-comp['A-1'] = '0110010'
-comp['D+A'] = '0000010'
-comp['D-A'] = '0010011'
-comp['A-D'] = '0000111'
-comp['D&A'] = '0000000'
-comp['D|A'] = '0010101'
-comp['M'] = '1110000'
-comp['!M'] = '1110001'
-comp['-M'] = '1110011'
-comp['M+1'] = '1110111'
-comp['M-1'] = '1110010'
-comp['D+M'] = '1000010'
-comp['D-M'] = '1010011'
-comp['M-D'] = '1000111'
-com['D&M'] = '1000000'
-comp['D|M'] = '1010101'
+comp['0']='0101010'
+comp['1']='0111111'
+comp['-1']='0111010'
+comp['D']='0001100'
+comp['A']='0110000'
+comp['!D']='0001101'
+comp['!A']='0110001'
+comp['-D']='0001111'
+comp['-A']='0110011'
+comp['D+1']='0011111'
+comp['A+1']='0110111'
+comp['D-1']='0001110'
+comp['A-1']='0110010'
+comp['D+A']='0000010'
+comp['D-A']='0010011'
+comp['A-D']='0000111'
+comp['D&A']='0000000'
+comp['D|A']='0010101'
+comp['M']='1110000'
+comp['!M']='1110001'
+comp['-M']='1110011'
+comp['M+1']='1110111'
+comp['M-1']='1110010'
+comp['D+M']='1000010'
+comp['D-M']='1010011'
+comp['M-D']='1000111'
+comp['D&M']='1000000'
+comp['D|M']='1010101'
 
-jump = dict{}
-jump['JGT'] = '001'
-jump['JEQ'] = '010'
-jump['JGE'] = '011'
-jump['JLT'] = '100'
-jump['JNE'] = '101'
-jump['JLE'] = '110'
-jump['JMP'] = '111'
+jump = {}
+jump['null']='000'
+jump['JGT']='001'
+jump['JEQ']='010'
+jump['JGE']='011'
+jump['JLT']='100'
+jump['JNE']='101'
+jump['JLE']='110'
+jump['JMP']='111'
+
