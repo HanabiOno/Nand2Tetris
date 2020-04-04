@@ -1,5 +1,7 @@
 # Each line of the assembly such be transleted into binary code
 
+
+
 # "//", white spaced and lines should be ignored
 def cleaner(code):
     """All comments, "//", white spaces and white lined will be removed to clean up the code.
@@ -42,28 +44,29 @@ def parser(parse_code):
     """The final parser that turns the assembly into binary code"""
     binlist = []
     for line in parse_code:
-        binline = 'binary line'
+        if commandType(line) == "A":
+            binline = Acommand(line)
+        elif commandType(line) == "C":
+            binline = Ccommand(line)
         binlist.append(binline)
-    "The list of binary lines will be wtitten out per line in the output .hack file"    
+    return binlist
+    '''
+    The list of binary lines will be wtitten out per line in the output .hack file    
     with open(".hack", "w") as hack:
         for line in binlist:
             f.write("%s\n" % line)
-
+    '''
+    
 def Acommand(Acommand):
     """A-command converted to binary code. A-command consists out of 0[ValueInBinary]."""
-    bin_value = '{0:08b}'.format(int(Acommand[1:]))
+    bin_value = '{0:{fill}15b}'.format(int(Acommand[1:]),fill="0")
     bin_Acommand = '0' + bin_value
     return bin_Acommand
 
-# C-command 111[dest][comp][jump]
-# dest = comp;jump 
-# comp or jump can be empty
-# if dest empt, "=" omitted
-# if jump empty, ";" omitted
-
 def Ccommand(Ccommand):
     """This function uses dest, comp, jump to turn the C-command into binary code.
-    C-command consists out of 111[dest][comp][jump]"""
+    C-command consists out of 111[dest][comp][jump]
+    dest = comp;jump"""
 
     if "=" in Ccommand:
         splitted_C = Ccommand.split("=")
@@ -78,6 +81,7 @@ def Ccommand(Ccommand):
         splitted_C2 = Ccommand.split(";")
         ass_comp = splitted_C2[0]
         ass_jump = splitted_C2[1]
+    # if jump 'null', ";" omitted     
     else:
         ass_comp = ass_comp_jump
         ass_jump = "null"
