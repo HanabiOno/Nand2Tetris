@@ -7,9 +7,30 @@ def cleaner(code):
 
 #Symbols: variables and labels
 def symbol_table(clean_code):
-    """All symbols in the code gathered in the symbol table"""
+    """All symbols in the code gathered in the symbol table which will be a dict"""
+    symbol_table = {}
+
+    "Label stored in computer's memory starting at address 0"
+    label_mem = 0
+
+    "Variable stored in computer's memory starting at address 1024"   
+    var_mem = 1024
+    
+    if label:
+        label_mem += 1
+    else:
+        var_mem += 1
+    
     return symbol_table, parse_code
 
+
+def commandType(line):
+    """Returns type of current command"""
+    if line[0] == "@":
+        return "A"
+        "We need to add L command at second step"
+    else:
+        return "C"
 
 def parser(parse_code)->:
     """The final parser that turns the assembly into binary code"""
@@ -22,34 +43,34 @@ def parser(parse_code)->:
         for line in binlist:
             f.write("%s\n" % line)
 
-def Ainstr(Ainstr) -> str:
-    """A-instruction converted to binary code. A-instruction consists out of 0[ValueInBinary]."""
-    bin_value = '{0:08b}'.format(Ainstr[1:])
-    bin_Ainstr = '0' + bin_value
-    return bin_Ainstr
+def Acommand(Acommand) -> str:
+    """A-command converted to binary code. A-command consists out of 0[ValueInBinary]."""
+    bin_value = '{0:08b}'.format(Acommand[1:])
+    bin_Acommand = '0' + bin_value
+    return bin_Acommand
 
-# C-instruction 111[dest][comp][jubbbbbmp]
+# C-command 111[dest][comp][jump]
 # dest = comp;jump 
 # comp or jump can be empty
 # if dest empt, "=" omitted
 # if jump empty, ";" omitted
 
-def Cinstr(Cinstr) -> str:
-    """This function uses dest, comp, jump to turn the C-instruction into binary code.
-    C-instruction consists out of 111[dest][comp][jump]"""
+def Ccommand(Ccommand) -> str:
+    """This function uses dest, comp, jump to turn the C-command into binary code.
+    C-command consists out of 111[dest][comp][jump]"""
 
-    if "=" in Cinstr:
-        splitted_C = Cinstr.split("=")
+    if "=" in Ccommand:
+        splitted_C = Ccommand.split("=")
         ass_dest = splitted_C[0]
     "If there is not a '=', dest is null"    
     else:
         ass_dest = "null"
-        splitted_C = Cinstr.split()
+        splitted_C = Ccommand.split()
         
-    bin_Cinstr = "111" + dest[ass_dest] + comp[ass_comp] + jump[ass_jump] 
-    return bin_Cinstr
+    bin_Ccommand = "111" + dest[ass_dest] + comp[ass_comp] + jump[ass_jump] 
+    return bin_Ccommand
 
-# For eacht part of the C-instruction we use a dictionary to translate that part quickly.
+# For eacht part of the C-command we use a dictionary to translate that part quickly.
 dest = {}
 dest['M'] = '001'
 dest['D'] = '010'
