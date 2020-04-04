@@ -1,16 +1,19 @@
 # Each line of the assembly such be transleted into binary code
 
-
-
-# "//", white spaced and lines should be ignored
-def cleaner(code):
-    """All comments, "//", white spaces and white lined will be removed to clean up the code.
-Also, every line of code will be out in a list."""
+def cleaner(filename):
+    """All comments, "//", white spaces and white lined will be removed to clean up the code. 
+    Also, every line of code will be out in a list."""
+    notwanted = ["/", "\n", "\r", "\\"]
     clean_code = []
-    for line in code:
-        print(line)
-    #return clean_code
-
+    with open(filename) as code:
+        for line in code.readlines():
+            if line[0] in notwanted:
+                continue
+            else:
+                endindex = line.find("r")
+                clean_line = line[:endindex]
+                clean_code.append(clean_line)
+    return clean_code    
 
 #Symbols: variables and labels
 def symbol_table(clean_code):
@@ -39,7 +42,6 @@ def commandType(line):
     else:
         return "C"
 
-
 def parser(parse_code):
     """The final parser that turns the assembly into binary code"""
     binlist = []
@@ -50,13 +52,7 @@ def parser(parse_code):
             binline = Ccommand(line)
         binlist.append(binline)
     return binlist
-    '''
-    The list of binary lines will be wtitten out per line in the output .hack file    
-    with open(".hack", "w") as hack:
-        for line in binlist:
-            f.write("%s\n" % line)
-    '''
-    
+
 def Acommand(Acommand):
     """A-command converted to binary code. A-command consists out of 0[ValueInBinary]."""
     bin_value = '{0:{fill}15b}'.format(int(Acommand[1:]),fill="0")
@@ -140,3 +136,10 @@ jump['JNE']='101'
 jump['JLE']='110'
 jump['JMP']='111'
 
+if __name__ == "__main__":
+    import sys
+    clean_code = cleaner(sys.argv[1])
+    #The list of binary lines will be wtitten out per line in the output .hack file            
+    with open(sys.argv[2],"w") as hack:
+        for line in parser(clean_code):
+            f.write("%s\n" % line)

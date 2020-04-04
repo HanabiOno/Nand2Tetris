@@ -8,10 +8,23 @@ from assembler import (jump,
                        Acommand,
                        Ccommand,
                        parser)
-'''
-with open("projects/06/MaxL.asm") as tstfile:
-    tstfile = tstfile.read()
-'''
+
+cleaner_out = ['@0',
+ 'D=M',
+ '@1',
+ 'D=D-M',
+ '@10',
+ 'D;JGT',
+ '@1',
+ 'D=M',
+ '@12',
+ '0;JMP',
+ '@0',
+ 'D=M',
+ '@2',
+ 'M=D',
+ '@14',
+ '0;JMP']
 
 assemblylist = ["@0",
                 "D=M",
@@ -52,8 +65,8 @@ class TestPM(unittest.TestCase):
     def setUp(self):
         pass
     
-    #def test_cleaner(self): 
-    #    self.assertEqual(cleaner(tstfile), cleaner_out)
+    def test_cleaner(self): 
+        self.assertEqual(cleaner("./projects/06/max/MaxL.asm"), cleaner_out)
     
     def test_commandTypeA(self):
         self.assertEqual(commandType("@56"), "A")
