@@ -15,14 +15,14 @@ It should read the .asm file, translate it into correct Hack binary code and wri
 ####The assembler will be built in two stages:
 #####1. write a basic assembler designed to translate assembly programs that contain no symbols.
 - helper functions
-  - cleaner: All comments, "//", white spaces and white lined will be removed to clean up the code.
+  - **cleaner**: All comments, "//", white spaces and white lined will be removed to clean up the code.
 Also, every line of code will be out in a list.
-  - Acommand: A-command converted to binary code. A-command consists out of 0[ValueInBinary].
-  - Ccommand: This function uses dest, comp, jump to turn the C-command into binary code.
+  - **Acommand**: A-command converted to binary code. A-command consists out of 0[ValueInBinary].
+  - **Ccommand**: This function uses dest, comp, jump to turn the C-command into binary code.
     C-command consists out of 111[dest][comp][jump]
     dest = comp;jump
-  - commandType: Returns type of current command
-  - parser: The final parser that turns the assembly into binary code
+  - **commandType**: Returns type of current command
+  - **parser**: The final parser that turns the assembly into binary code
 - dictionaries to look up binary translation for C-command
   - dest
   - comp
@@ -30,9 +30,8 @@ Also, every line of code will be out in a list.
 
 #####2. extend your basic assembler with symbol handling capabilities, yielding the final assembler
 - (additional) helper functions
-  - symbol_table
-    - symbol_table1: All pseudo commands (LCommands) will be put in the symboltable for later reference and the line will be deleted
-    - symbol_table2: The second pass replaces symbolic Acommands @Xxx with its associated binary memory location. All variables will be put in the symboltable and all the symbols (labels and variables) will be replaced with their keys.
+  - symbol_table1: All **pseudo commands** (LCommands) will be put in the symboltable for later reference and the line will be deleted
+  - symbol_table2: The second pass replaces symbolic Acommands @Xxx with its associated binary memory location. All **variables** will be put in the symboltable and all the symbols (labels and variables) will be replaced with their keys.
 
 > The unittest.py file applies unittest on the seperate functions in the assembler to make sure all of them work correctly seperately.
 
