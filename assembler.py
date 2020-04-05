@@ -76,16 +76,23 @@ def commandType(line):
     else:
         return "C"
 
-def parser(parse_code):
+def parser(infile, outfile):
     """The final parser that turns the assembly into binary code"""
+    clean_code = cleaner(infile)
+    pseudofreecode, symboltable2 = symbol_table1(clean_code, symboltable)
+    symbolfreecode = symbol_table2(pseudofreecode, symboltable2)
+    
     binlist = []
-    for line in parse_code:
+    for line in symbolfreecode:
         if commandType(line) == "A":
             binline = Acommand(line)
         elif commandType(line) == "C":
             binline = Ccommand(line)
         binlist.append(binline)
-    return binlist
+
+    with open(outfile, "w") as hack:
+        for binline in binlist:
+            hack.write("%s\n" % binline)
 
 def Acommand(Acommand):
     """A-command converted to binary code. A-command consists out of 0[ValueInBinary]."""
@@ -169,11 +176,8 @@ jump['JLT']='100'
 jump['JNE']='101'
 jump['JLE']='110'
 jump['JMP']='111'
-
+'''
 if __name__ == "__main__":
     import sys
-    clean_code = cleaner(sys.argv[1])
-    #The list of binary lines will be wtitten out per line in the output .hack file            
-    with open(sys.argv[2],"w") as hack:
-        for line in parser(clean_code):
-            f.write("%s\n" % line)
+    parser(sys.argv[1], sys.argv[2])
+'''
