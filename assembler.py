@@ -51,7 +51,7 @@ All pseudo commands (LCommands) will be put in the symboltable for later referen
 
 def symbol_table2(pseudofreecode, symboltable):
     """The second pass replaces symbolic Acommands @Xxx with its associated binary memory location.
-All variables will be put in the symboltable and all the symbols (labels and variables) will be replaced"""
+All variables will be put in the symboltable and all the symbols (labels and variables) will be replaced with their keys"""
     RAM = 16
     symbolfreecode = []
     for line in pseudofreecode:

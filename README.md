@@ -12,8 +12,8 @@ The goal of this project is to write an **assembler** (in assembler.py). [An ass
 It should read the .asm file, translate it into correct Hack binary code and write that code to the .hack file.
     $ ./assembler.py < Prog.asm > Prog.hack
 
-###The assembler will be built in two stages:
-####1. write a basic assembler designed to translate assembly programs that contain no symbols.
+####The assembler will be built in two stages:
+#####1. write a basic assembler designed to translate assembly programs that contain no symbols.
 - helper functions
   - cleaner: All comments, "//", white spaces and white lined will be removed to clean up the code.
 Also, every line of code will be out in a list.
@@ -28,9 +28,11 @@ Also, every line of code will be out in a list.
   - comp
   - jump
 
-####2. extend your basic assembler with symbol handling capabilities, yielding the final assembler
+#####2. extend your basic assembler with symbol handling capabilities, yielding the final assembler
 - (additional) helper functions
   - symbol_table
+    - symbol_table1: All pseudo commands (LCommands) will be put in the symboltable for later reference and the line will be deleted
+    - symbol_table2: The second pass replaces symbolic Acommands @Xxx with its associated binary memory location. All variables will be put in the symboltable and all the symbols (labels and variables) will be replaced with their keys.
 
 > The unittest.py file applies unittest on the seperate functions in the assembler to make sure all of them work correctly seperately.
 
