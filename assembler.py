@@ -10,35 +10,69 @@ def cleaner(filename):
             if line[0] in notwanted:
                 continue
             else:
-                endindex = line.find("r")
-                clean_line = line[:endindex]
-                clean_code.append(clean_line)
-    return clean_code    
+                for item in notwanted:
+                    endindex = line.find(item)
+                    if endindex != -1:
+                        clean_line_list = line[:endindex].split()
+                        clean_line = clean_line_list[0]
+                        break        
+            clean_code.append(clean_line)
+    return clean_code
+
+#predefined symbols
+symboltable = {}
+symboltable['SP']='0'
+symboltable['LCL']='1'   
+symboltable['ARG']='2'
+symboltable['THIS']='3'
+symboltable['THAT']='4'
+for i in range(16):
+    label = 'R'+str(i)
+    symboltable[label]=str(i)   
+symboltable['SCREEN']='16384'
+symboltable['KBD']='24576'
 
 #Symbols: variables and labels
-def symbol_table(clean_code):
-    """All symbols in the code gathered in the symbol table which will be a dict"""
-    symbol_table = {}
+def symbol_table1(clean_code, symboltable):
+    """All symbols in the code gathered in the symbol table which will be a dict.
+All pseudo commands (LCommands) will be put in the symboltable for later reference and the line will be deleted."""
+    pseudofreecode = []
+    ROM = 0
+    for line in clean_code:
+        if commandType(line) == "L":
+            label = line[1:-1] 
+            if label not in symboltable:
+                symboltable[label] = str(ROM)
+        else:
+            pseudofreecode.append(line)
+        ROM += 1
+        
+    return pseudofreecode, symboltable
 
-    "Label stored in computer's memory starting at address 0"
-    label_mem = 0
-
-    "Variable stored in computer's memory starting at address 1024"   
-    var_mem = 1024
-    
-    if label:
-        label_mem += 1
-    else:
-        var_mem += 1
-    
-    return symbol_table, parse_code
-
+def symbol_table2(pseudofreecode, symboltable):
+    """The second pass replaces symbolic Acommands @Xxx with its associated binary memory location.
+All variables will be put in the symboltable and all the symbols (labels and variables) will be replaced"""
+    RAM = 16
+    symbolfreecode = []
+    for line in pseudofreecode:
+        if commandType(line) == "A":
+            if line[1:] in symboltable:
+                symbolfreecode.append("@"+symboltable[line[1:]])
+            elif type(line[1:]) != int:
+                symboltable[line[1:]]=str(RAM)
+                symbolfreecode.append("@"+symboltable[line[1:]])
+                RAM += 1
+        else:
+            symbolfreecode.append(line)
+    return symbolfreecode
 
 def commandType(line):
     """Returns type of current command"""
     if line[0] == "@":
         return "A"
         "We need to add L command at second step"
+    elif line[0] == "(":
+        return "L"
     else:
         return "C"
 
