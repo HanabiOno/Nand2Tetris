@@ -59,13 +59,22 @@ All variables will be put in the symboltable and all the symbols (labels and var
         if commandType(line) == "A":
             if line[1:] in symboltable:
                 symbolfreecode.append("@"+symboltable[line[1:]])
-            elif type(line[1:]) != int:
+            elif RepresentsInt(line[1:]):
+                symbolfreecode.append(line)
+            else:
                 symboltable[line[1:]]=str(RAM)
                 symbolfreecode.append("@"+symboltable[line[1:]])
-                RAM += 1
         else:
             symbolfreecode.append(line)
+        RAM += 1
     return symbolfreecode
+
+def RepresentsInt(s):
+    try: 
+        int(s)
+        return True
+    except ValueError:
+        return False
 
 def commandType(line):
     """Returns type of current command"""
@@ -82,7 +91,7 @@ def parser(infile, outfile):
     clean_code = cleaner(infile)
     pseudofreecode, symboltable2 = symbol_table1(clean_code, symboltable)
     symbolfreecode = symbol_table2(pseudofreecode, symboltable2)
-    
+
     binlist = []
     for line in symbolfreecode:
         if commandType(line) == "A":
