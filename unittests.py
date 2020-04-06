@@ -12,7 +12,7 @@ from assembler import (jump,
                        symbol_table1,
                        symbol_table2)
 
-clean_code = cleaner("./projects/06/max/Max.asm")
+clean_code = cleaner("Max.asm")
 pseudofreecode =  ['@R0',
   'D=M',
   '@R1',
@@ -106,22 +106,10 @@ assemblylist = ["@0",
                 "@14",
                 "0;JMP"]
 
-binlist =  ['0000000000000000',
-  '1110101110000000',
-  '0000000000000001',
-  '1110101010011000',
-  '0000000000001010',
-  '1110000001100001',
-  '0000000000000001',
-  '1110101110000000',
-  '0000000000001100',
-  '1110000101010111',
-  '0000000000000000',
-  '1110101110000000',
-  '0000000000000010',
-  '1110010001100000',
-  '0000000000001110',
-  '1110000101010111']
+with open("Max.hack") as correct:
+    binlist = []
+    for line in correct.readlines():
+        binlist.append(line)
 
 class TestPM(unittest.TestCase):
 
@@ -129,7 +117,7 @@ class TestPM(unittest.TestCase):
         pass
     
     def test_cleaner(self): 
-        self.assertEqual(cleaner("./projects/06/max/MaxL.asm"), cleaner_out)
+        self.assertEqual(cleaner("MaxL.asm"), cleaner_out)
     
     def test_commandTypeA(self):
         self.assertEqual(commandType("@56"), "A")
