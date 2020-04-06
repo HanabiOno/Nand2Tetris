@@ -9,8 +9,10 @@ In order to build the Half-, FullAdder and ALU chips we needed some basic logic 
 
 ##[Project 6] (https://www.nand2tetris.org/project06):
 The goal of this project is to write an **assembler** (in assembler.py). [An assembler is] "a program designed to translate code written in a symbolic machine language into code written in binary machine language."
-It should read the .asm file, translate it into correct Hack binary code and write that code to the .hack file.
-    $ ./assembler.py < Prog.asm > Prog.hack
+It reads the .asm file, translate it into correct Hack binary code and write that code to the .hack file with the following command:
+    $ python assembler.py Prog.asm Prog.hack
+    
+> Only the file name, filepath is created in assembler
 
 ####The assembler will be built in two stages:
 #####1. write a basic assembler designed to translate assembly programs that contain no symbols.
@@ -36,3 +38,7 @@ Also, every line of code will be out in a list.
 > The unittest.py file applies unittest on the seperate functions in the assembler to make sure all of them work correctly seperately.
 
 > Similarly to project 2, in order to make sure the assembler is working correctly, it will be tested. 3 out of 4 .asm files have an *L.asm file which is without symbols to check whether the first step is working correctly.
+
+####Current status correctly assembled files:
+1. Add.asm
+1. Max.asm
