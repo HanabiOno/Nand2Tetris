@@ -39,6 +39,4 @@ Also, every line of code will be out in a list.
 
 > Similarly to project 2, in order to make sure the assembler is working correctly, it will be tested. 3 out of 4 .asm files have an *L.asm file which is without symbols to check whether the first step is working correctly.
 
-####Current status correctly assembled files:
-1. Add.asm
-1. Max.asm
+> The My*.hack files are the ones written by the assembly.py programme and the *.hack files are the correct ones created by tools/assembler.sh.
