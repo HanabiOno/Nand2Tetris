@@ -5,7 +5,7 @@ def cleaner(filename):
     Also, every line of code will be out in a list."""
     notwanted = ["/", "\n", "\r", "\\"]
     clean_code = []
-    path = "/projects/06/" + filename[:len(filename)-4].lower() + "/" + filename
+    path = "./projects/06/" + filename[:len(filename)-4].lower() + "/" + filename
     with open(path) as code:
         for line in code.readlines():
             if line[0] in notwanted:
@@ -177,8 +177,7 @@ jump['JLT']='100'
 jump['JNE']='101'
 jump['JLE']='110'
 jump['JMP']='111'
-'''
+
 if __name__ == "__main__":
     import sys
     parser(sys.argv[1], sys.argv[2])
-'''
