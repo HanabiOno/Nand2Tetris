@@ -46,7 +46,7 @@ All pseudo commands (LCommands) will be put in the symboltable for later referen
                 symboltable[label] = str(ROM)
         else:
             pseudofreecode.append(line)
-        ROM += 1
+            ROM += 1
         
     return pseudofreecode, symboltable
 
