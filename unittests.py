@@ -37,19 +37,19 @@ symbolfreecode = ['@0',
  'D;JGT',
  '@1',
  'D=M',
- '@13',
+ '@12',
  '0;JMP',
  '@0',
  'D=M',
  '@2',
  'M=D',
- '@16',
+ '@14',
  '0;JMP']
 symboltable2 = {'ARG': '2',
-  'INFINITE_LOOP': '16',
+  'INFINITE_LOOP': '14',
   'KBD': '24576',
   'LCL': '1',
-  'OUTPUT_D': '13',
+  'OUTPUT_D': '12',
   'OUTPUT_FIRST': '10',
   'R0': '0',
   'R1': '1',
@@ -72,21 +72,24 @@ symboltable2 = {'ARG': '2',
   'THAT': '4',
   'THIS': '3'}
 
-cleaner_out = ['@0',
+cleaner_out = ['@R0',
  'D=M',
- '@1',
+ '@R1',
  'D=D-M',
- '@10',
+ '@OUTPUT_FIRST',
  'D;JGT',
- '@1',
+ '@R1',
  'D=M',
- '@12',
+ '@OUTPUT_D',
  '0;JMP',
- '@0',
+ '(OUTPUT_FIRST)',
+ '@R0',
  'D=M',
- '@2',
+ '(OUTPUT_D)',
+ '@R2',
  'M=D',
- '@14',
+ '(INFINITE_LOOP)',
+ '@INFINITE_LOOP',
  '0;JMP']
 
 assemblylist = ["@0",
@@ -117,7 +120,7 @@ class TestPM(unittest.TestCase):
         pass
     
     def test_cleaner(self): 
-        self.assertEqual(cleaner("MaxL.asm"), cleaner_out)
+        self.assertEqual(cleaner("Max.asm"), cleaner_out)
     
     def test_commandTypeA(self):
         self.assertEqual(commandType("@56"), "A")
@@ -132,13 +135,10 @@ class TestPM(unittest.TestCase):
         self.assertEqual(Acommand("@56"), "0"+'{0:{fill}15b}'.format(56, fill="0"))
 
     def test_Ccommand(self):
-        self.assertEqual(Ccommand("D=D-M"), "111"+dest["D"]+comp["D-M"]+jump["null"])
+        self.assertEqual(Ccommand("D=D-M"), "111"+comp["D-M"]+dest["D"]+jump["null"])
 
     def test_Ccommand2(self):
-        self.assertEqual(Ccommand("D;JGT"), "111"+dest["null"]+comp["D"]+jump["JGT"])
-
-    def test_parser(self):
-        self.assertEqual(parser(assemblylist),binlist)
+        self.assertEqual(Ccommand("D;JGT"), "111"+comp["D"]+dest["null"]+jump["JGT"])
 
     def test_symbol_table1(self):
         self.assertEqual(symbol_table1(clean_code, symboltable),(pseudofreecode, symboltable2))
