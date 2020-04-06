@@ -124,7 +124,7 @@ def Ccommand(Ccommand):
         ass_comp = ass_comp_jump
         ass_jump = "null"
    
-    bin_Ccommand = "111" + dest[ass_dest] + comp[ass_comp] + jump[ass_jump] 
+    bin_Ccommand = "111" + comp[ass_comp] + dest[ass_dest] + jump[ass_jump] 
     return bin_Ccommand
 
 # For eacht part of the C-command we use a dictionary to translate that part quickly.
