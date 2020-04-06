@@ -5,7 +5,8 @@ def cleaner(filename):
     Also, every line of code will be out in a list."""
     notwanted = ["/", "\n", "\r", "\\"]
     clean_code = []
-    with open(filename) as code:
+    path = "/projects/06/" + filename[:len(filename)-4].lower() + "/" + filename
+    with open(path) as code:
         for line in code.readlines():
             if line[0] in notwanted:
                 continue
