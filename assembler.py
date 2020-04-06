@@ -64,9 +64,10 @@ All variables will be put in the symboltable and all the symbols (labels and var
             else:
                 symboltable[line[1:]]=str(RAM)
                 symbolfreecode.append("@"+symboltable[line[1:]])
+                RAM += 1
         else:
             symbolfreecode.append(line)
-        RAM += 1
+
     return symbolfreecode
 
 def RepresentsInt(s):
