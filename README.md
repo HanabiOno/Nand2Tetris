@@ -1,5 +1,5 @@
-#nand2tetris project 2 and 6
-Individual assignment 4 for advanced programming: Project 2 and 6 from the [nand2tetris] (https://www.nand2tetris.org) online course.
+nand2tetris project 2 and 6
+Project 2 and 6 from the [nand2tetris] (https://www.nand2tetris.org) online course.
 
 ##[Project 2] (https://www.nand2tetris.org/project02):
 Build the following chips: **Half-** and **FullAdder**, **16-bit Adder** and **Incrementer**, **Arithhmetic Logic Unit** (with and without output status handler)
